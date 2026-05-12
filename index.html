@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>America First Credit Union — Member Support Script</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --navy:    #0D2B5E;
+    --navy-d:  #081E45;
+    --navy-l:  #1A3F7A;
+    --orange:  #F47B20;
+    --orange-l:#FEF0E6;
+    --orange-d:#C85F10;
+    --white:   #FFFFFF;
+    --gray-1:  #1E2733;
+    --gray-2:  #4A5568;
+    --gray-3:  #718096;
+    --gray-4:  #CBD5E0;
+    --gray-5:  #EDF2F7;
+    --gray-6:  #F7FAFC;
+    --green:   #1A7A4A;
+    --green-l: #EAF4EE;
+    --red:     #C0182A;
+    --red-l:   #FDEAED;
+    --amber:   #8A5C00;
+    --amber-l: #FEF8EC;
+    --radius:  8px;
+    --shadow:  0 2px 14px rgba(13,43,94,0.09);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--gray-6);
+    color: var(--gray-1);
+    padding: 24px 16px;
+    font-size: 14px;
+    line-height: 1.55;
+  }
+  .wrap { max-width: 820px; margin: 0 auto; }
+
+  /* HEADER */
+  .header {
+    background: var(--navy);
+    color: var(--white);
+    border-radius: var(--radius);
+    margin-bottom: 16px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+  .header-top {
+    background: var(--navy-d);
+    padding: 18px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    border-bottom: 2px solid var(--orange);
+  }
+  .header h1 { font-size: 1.1rem; font-weight: 700; letter-spacing: -0.2px; }
+  .header .sub { font-size: 0.72rem; opacity: 0.6; margin-top: 2px; letter-spacing: 0.3px; }
+  .header-right { font-size: 0.7rem; opacity: 0.55; text-align: right; line-height: 1.7; }
+  .header-bottom {
+    padding: 10px 24px;
+    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  }
+  .hbadge {
+    font-size: 0.68rem; font-weight: 600; letter-spacing: 0.5px;
+    text-transform: uppercase; padding: 3px 10px; border-radius: 999px;
+    background: rgba(255,255,255,0.12); color: rgba(255,255,255,0.85);
+  }
+
+  /* CARD */
+  .card {
+    background: var(--white);
+    border: 1px solid #E2E8F0;
+    border-radius: var(--radius);
+    padding: 22px 24px;
+    margin-bottom: 14px;
+    box-shadow: var(--shadow);
+  }
+  .card-title {
+    font-size: 0.68rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 1px; color: var(--gray-2);
+    margin-bottom: 16px; padding-bottom: 10px;
+    border-bottom: 1px solid var(--gray-5);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .step-dot {
+    width: 22px; height: 22px; background: var(--navy); color: var(--white);
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 0.65rem; font-weight: 700; flex-shrink: 0;
+  }
+
+  /* FIELDS */
+  label {
+    display: block; font-size: 0.69rem; font-weight: 600;
+    color: var(--gray-3); text-transform: uppercase;
+    letter-spacing: 0.7px; margin-bottom: 5px;
+  }
+  input, select {
+    width: 100%; border: 1.5px solid var(--gray-4); border-radius: 6px;
+    padding: 9px 12px; font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem; color: var(--gray-1); background: var(--white);
+    margin-bottom: 14px; transition: border-color 0.15s; outline: none;
+  }
+  input:focus, select:focus { border-color: var(--navy); }
+  .g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media(max-width:600px){ .g2 { grid-template-columns: 1fr; } }
+
+  .sec {
+    font-size: 0.64rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 1px; color: var(--gray-4);
+    margin: 18px 0 10px; display: flex; align-items: center; gap: 8px;
+  }
+  .sec::after { content:''; flex:1; height:1px; background: var(--gray-5); }
+
+  /* VERIFY */
+  .verify-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
+  .verify-btn {
+    flex: 1; min-width: 130px; padding: 10px 14px; border-radius: 6px;
+    border: 1.5px solid var(--gray-4); background: var(--gray-6);
+    font-size: 0.79rem; font-weight: 600; cursor: pointer; transition: all 0.15s;
+    font-family: 'DM Sans', sans-serif; text-align: center; color: var(--gray-2);
+  }
+  .verify-btn:hover { border-color: var(--navy); background: var(--white); }
+  .verify-btn.pass  { background: var(--green-l); border-color: var(--green); color: var(--green); }
+  .verify-btn.fail  { background: var(--red-l);   border-color: var(--red);   color: var(--red);   }
+
+  /* BADGE */
+  .badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 3px 10px; border-radius: 999px;
+    font-size: 0.68rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .badge-verified { background: var(--green-l); color: var(--green); }
+  .badge-pending  { background: var(--amber-l); color: var(--amber); }
+  .badge-failed   { background: var(--red-l);   color: var(--red);   }
+
+  /* ACCOUNT TILES */
+  .acct-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 10px;
+  }
+  .acct-tile {
+    background: var(--gray-6); border: 1px solid #E2E8F0;
+    border-radius: 6px; padding: 12px 14px;
+  }
+  .at-label { font-size: 0.65rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.7px; color: var(--gray-3); margin-bottom: 4px; }
+  .at-value { font-size: 1rem; font-weight: 700; color: var(--navy); }
+  .at-sub   { font-size: 0.7rem; color: var(--gray-3); margin-top: 2px; }
+
+  /* SCRIPT CALLOUT */
+  .script-callout {
+    background: #EEF3FA; border-left: 3px solid var(--navy);
+    border-radius: 0 6px 6px 0; padding: 10px 14px;
+    font-size: 0.85rem; font-style: italic; color: var(--navy-d); margin-bottom: 16px;
+  }
+
+  /* TOAST */
+  .toast-container { position: fixed; top: 20px; right: 20px; z-index: 999; }
+  .toast {
+    background: var(--navy); color: var(--white);
+    padding: 10px 18px; border-radius: 6px; font-size: 0.82rem; font-weight: 500;
+    margin-bottom: 8px; opacity: 0; transform: translateY(-6px);
+    transition: all 0.2s; max-width: 300px;
+    box-shadow: 0 4px 16px rgba(13,43,94,0.25); border-left: 3px solid var(--orange);
+  }
+  .toast.show { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<div class="toast-container" id="toastCont"></div>
+<div class="wrap">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-top">
+      <div>
+        <h1>America First Credit Union</h1>
+        <div class="sub">Member Services · Agent Support Console</div>
+      </div>
+      <div class="header-right">
+        Member Contact Center<br>
+        Federally insured by NCUA
+      </div>
+    </div>
+    <div class="header-bottom">
+      <span class="hbadge">Auto Loans</span>
+      <span class="hbadge">Mortgage</span>
+      <span class="hbadge">Accounts</span>
+      <span class="hbadge">Credit Cards</span>
+      <span class="hbadge">General Inquiries</span>
+    </div>
+  </div>
+
+  <!-- 1. IDENTITY VERIFICATION -->
+  <div class="card">
+    <div class="card-title">
+      <div class="step-dot">1</div>
+      Identity Verification
+    </div>
+
+    <div class="script-callout">
+      "Thank you for calling America First Credit Union. My name is [Agent Name]. To get started, I'll need to verify your identity. Can I get your full name and member number?"
+    </div>
+
+    <div class="g2">
+      <div><label>First Name</label><input id="empFirst" placeholder="First name"></div>
+      <div><label>Last Name</label><input id="empLast" placeholder="Last name"></div>
+      <div><label>Member Number</label><input id="empId" placeholder="Member number"></div>
+      <div><label>Last 4 of SSN</label><input id="ssn4" placeholder="XXXX" maxlength="4" style="letter-spacing:3px;"></div>
+      <div><label>Date of Birth</label><input id="dob" type="text" placeholder="MM/DD/YYYY"></div>
+      <div><label>Phone / Address on File</label><input id="workLoc" placeholder="Phone or street address"></div>
+    </div>
+
+    <div class="sec">Verification Method</div>
+    <div class="verify-row">
+      <div class="verify-btn" id="vDob"  onclick="toggleVerify('vDob')">🎂 Date of Birth</div>
+      <div class="verify-btn" id="vAddr" onclick="toggleVerify('vAddr')">📍 Address on File</div>
+      <div class="verify-btn" id="vSSN"  onclick="toggleVerify('vSSN')">🔐 Last 4 SSN</div>
+      <div class="verify-btn" id="vPin"  onclick="toggleVerify('vPin')">🔑 Member PIN</div>
+    </div>
+
+    <div id="verifyBadge"></div>
+
+    <div class="sec">Caller Details</div>
+    <div class="g2">
+      <div>
+        <label>Call Channel</label>
+        <select id="callMethod">
+          <option value="inbound">Inbound — Member Calling</option>
+          <option value="mobile">Mobile App Transfer</option>
+          <option value="chat">Chat Escalation</option>
+          <option value="branch">Branch Transfer</option>
+        </select>
+      </div>
+      <div>
+        <label>Member Since</label>
+        <input id="memberSince" placeholder="e.g. 2014">
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. MEMBER ACCOUNT SNAPSHOT -->
+  <div class="card">
+    <div class="card-title">
+      <div class="step-dot">2</div>
+      Member Account Snapshot
+    </div>
+
+    <div class="acct-grid">
+      <div class="acct-tile">
+        <div class="at-label">Member #</div>
+        <div class="at-value" id="snap-member">—</div>
+        <div class="at-sub">Primary ID</div>
+      </div>
+      <div class="acct-tile">
+        <div class="at-label">Account Type</div>
+        <div class="at-value">
+          <select id="acctType" style="border:none;background:transparent;padding:0;margin:0;font-weight:700;color:var(--navy);font-family:'DM Sans',sans-serif;font-size:0.95rem;width:100%;cursor:pointer;">
+            <option>Individual</option>
+            <option>Joint</option>
+            <option>Business</option>
+            <option>Trust</option>
+          </select>
+        </div>
+      </div>
+      <div class="acct-tile">
+        <div class="at-label">Primary Product</div>
+        <div class="at-value">
+          <select id="primaryProd" style="border:none;background:transparent;padding:0;margin:0;font-weight:700;color:var(--navy);font-family:'DM Sans',sans-serif;font-size:0.95rem;width:100%;cursor:pointer;">
+            <option>Auto Loan</option>
+            <option>Mortgage</option>
+            <option>Checking</option>
+            <option>Savings</option>
+            <option>Credit Card</option>
+            <option>Personal Loan</option>
+          </select>
+        </div>
+      </div>
+      <div class="acct-tile">
+        <div class="at-label">Loan Balance</div>
+        <div class="at-value" id="snap-balance">—</div>
+        <div class="at-sub">Outstanding</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  const qp = new URLSearchParams(window.location.search);
+
+  function getQP(...keys) {
+    for (let k of keys) {
+      const v = qp.get(k);
+      if (v && v.trim() !== "") return v.trim();
+    }
+    return "";
+  }
+
+  const DEFAULTS = {
+    empFirst:    "Alex",
+    empLast:     "Johnson",
+    ssn4:        "****",
+    dob:         "05/03/1980",
+    workLoc:     "440 Broadway, Denver, CO",
+    empId:       "A1137404",
+    memberSince: "2014",
+    loanBal:     "$20,349"
+  };
+
+  function setField(id, val) {
+    const el = document.getElementById(id);
+    if (el) el.value = val;
+  }
+
+  setField("empFirst",    getQP("firstName",    "FNAME",   "fname")             || DEFAULTS.empFirst);
+  setField("empLast",     getQP("lastName",     "LNAME",   "lname")             || DEFAULTS.empLast);
+  setField("ssn4",        getQP("ssn4",         "SSN4",    "ssn")               || DEFAULTS.ssn4);
+  setField("dob",         getQP("dateOfBirth",  "DOB",     "dob", "START_DATE") || DEFAULTS.dob);
+  setField("workLoc",     getQP("workLocation", "ADDRESS", "address")           || DEFAULTS.workLoc);
+  setField("empId",       getQP("employeeId",   "ACCOUNT", "account")           || DEFAULTS.empId);
+  setField("memberSince", getQP("memberSince",  "MSINCE",  "msince")            || DEFAULTS.memberSince);
+
+  // Sync snapshot tiles
+  const empIdEl    = document.getElementById("empId");
+  const snapMember = document.getElementById("snap-member");
+  const snapBal    = document.getElementById("snap-balance");
+
+  function syncSnap() { snapMember.textContent = empIdEl.value || "—"; }
+  empIdEl.addEventListener("input", syncSnap);
+  syncSnap();
+
+  snapBal.textContent = getQP("loanBalance", "LOAN", "loan") || DEFAULTS.loanBal;
+
+  // Verify toggle
+  function toggleVerify(id) {
+    const el = document.getElementById(id);
+    if (el.classList.contains('pass')) {
+      el.classList.remove('pass'); el.classList.add('fail');
+    } else if (el.classList.contains('fail')) {
+      el.classList.remove('fail');
+    } else {
+      el.classList.add('pass');
+    }
+    updateVerifyBadge();
+  }
+
+  function updateVerifyBadge() {
+    const btns = ['vDob','vAddr','vSSN','vPin'].map(id => document.getElementById(id));
+    const badge = document.getElementById('verifyBadge');
+    const anyFail   = btns.some(b => b.classList.contains('fail'));
+    const passCount = btns.filter(b => b.classList.contains('pass')).length;
+
+    if (anyFail) {
+      badge.innerHTML = '<span class="badge badge-failed">⚠ Verification Failed — Do Not Proceed</span>';
+    } else if (passCount >= 2) {
+      badge.innerHTML = '<span class="badge badge-verified">✓ Identity Verified (' + passCount + ' factors)</span>';
+    } else if (passCount === 1) {
+      badge.innerHTML = '<span class="badge badge-pending">◑ 1 Factor — Need 1 More</span>';
+    } else {
+      badge.innerHTML = '<span class="badge badge-pending">◑ Pending Verification</span>';
+    }
+  }
+
+  window.toggleVerify = toggleVerify;
+  updateVerifyBadge();
+</script>
+</body>
+</html>
